@@ -10,7 +10,7 @@ $thumb = $recipe['thumbnail_url'] ?: youTubeThumbnail($recipe['youtube_url']);
         <?php if ($thumb): ?>
             <img src="<?= h($thumb) ?>" alt="<?= h($recipe['title']) ?>" loading="lazy">
         <?php else: ?>
-            <div class="card-placeholder">🍳</div>
+            <div class="card-placeholder">—</div>
         <?php endif; ?>
         <?php if (!empty($recipe['category_name'])): ?>
             <span class="recipe-category-badge"><?= h($recipe['category_name']) ?></span>

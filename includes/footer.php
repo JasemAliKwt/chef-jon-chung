@@ -6,7 +6,7 @@
     <div class="container">
         <div class="footer-top">
             <div class="footer-brand">
-                <span class="logo-icon">🍳</span>
+                
                 <span class="footer-name"><?= h($siteName) ?></span>
                 <p class="footer-tagline"><?= h($siteTagline) ?></p>
             </div>

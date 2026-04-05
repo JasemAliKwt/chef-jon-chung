@@ -110,7 +110,7 @@ require_once __DIR__ . '/includes/header.php';
 
         <?php if (empty($recipes)): ?>
             <div class="empty-public">
-                <span>🍳</span>
+                <span>—</span>
                 <h2>No recipes found</h2>
                 <p>Check back soon — new recipes are on the way!</p>
             </div>

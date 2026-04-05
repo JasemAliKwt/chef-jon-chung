@@ -28,6 +28,12 @@ $socialTT    = getSetting('social_tiktok');
         <meta property="og:image" content="<?= h($ogImage) ?>">
     <?php endif; ?>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="<?= SITE_URL ?>/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= SITE_URL ?>/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= SITE_URL ?>/assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= SITE_URL ?>/assets/images/apple-touch-icon.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +47,7 @@ $socialTT    = getSetting('social_tiktok');
 <header class="site-header">
     <div class="container header-inner">
         <a href="<?= SITE_URL ?>/" class="site-logo">
-            <span class="logo-icon">🍳</span>
+            
             <span class="logo-text"><?= h($siteName) ?></span>
         </a>
 

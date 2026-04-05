@@ -15,6 +15,7 @@ $unreadCount = dbCount("SELECT COUNT(*) FROM contact_messages WHERE is_read = 0"
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= h($pageTitle ?? 'Admin') ?> — <?= h(SITE_NAME) ?> Admin</title>
+    <link rel="icon" type="image/x-icon" href="<?= SITE_URL ?>/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/admin.css">
@@ -28,7 +29,7 @@ $unreadCount = dbCount("SELECT COUNT(*) FROM contact_messages WHERE is_read = 0"
             <span></span><span></span><span></span>
         </button>
         <a href="<?= SITE_URL ?>/admin/" class="topbar-brand">
-            🍳 <span><?= h(SITE_NAME) ?></span>
+            <span><?= h(SITE_NAME) ?></span>
         </a>
     </div>
     <div class="topbar-right">

@@ -59,7 +59,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <?php if (empty($recipes)): ?>
     <div class="empty-state-large">
-        <span class="empty-icon">🍳</span>
+        <span class="empty-icon">—</span>
         <h2>No recipes yet</h2>
         <p>Start by adding your first recipe!</p>
         <a href="<?= SITE_URL ?>/admin/recipe-edit.php" class="btn btn-primary">+ Add Recipe</a>
