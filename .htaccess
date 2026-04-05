@@ -1,0 +1,19 @@
+# ── Security ───────────────────────────────
+# Block access to sensitive files
+<FilesMatch "\.(sql|md|gitignore)$">
+    Require all denied
+</FilesMatch>
+
+# Block access to includes directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^includes/ - [F,L]
+</IfModule>
+
+# ── Clean URLs (Phase 4) ──────────────────
+# Uncomment these when ready for clean URLs:
+# RewriteEngine On
+# RewriteBase /
+# RewriteRule ^recipe/([a-z0-9-]+)/?$ recipe.php?slug=$1 [L,QSA]
+# RewriteRule ^blog/([a-z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
+# RewriteRule ^category/([a-z0-9-]+)/?$ recipes.php?category=$1 [L,QSA]

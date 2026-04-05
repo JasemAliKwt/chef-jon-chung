@@ -1,0 +1,17 @@
+# Local config overrides (contains real DB credentials)
+includes/config.local.php
+
+# Uploaded images
+assets/images/uploads/*
+!assets/images/uploads/.gitkeep
+
+# Setup script (should be deleted after use)
+setup.php
+
+# IDE / OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
