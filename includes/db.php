@@ -201,7 +201,7 @@ function extractYouTubeId(?string $url): ?string {
     if (empty($url)) return null;
     
     $patterns = [
-        '/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/',
+        '/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/live\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/',
         '/^([a-zA-Z0-9_-]{11})$/'  // Just the ID itself
     ];
     
@@ -270,4 +270,22 @@ function setSetting(string $key, string $value): void {
          ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)",
         [$key, $value]
     );
+}
+
+// ── URL Helpers (Clean URLs) ──────────────
+
+function recipeUrl(string $slug): string {
+    return SITE_URL . '/recipe/' . $slug;
+}
+
+function postUrl(string $slug): string {
+    return SITE_URL . '/blog/' . $slug;
+}
+
+function categoryUrl(string $slug): string {
+    return SITE_URL . '/category/' . $slug;
+}
+
+function pageUrl(string $page): string {
+    return SITE_URL . '/' . $page;
 }

@@ -1,0 +1,25 @@
+<?php
+/**
+ * Production Config — Hostinger
+ *
+ * Copy this file to: includes/config.local.php
+ * Update the values below with your Hostinger database credentials.
+ *
+ * NEVER commit config.local.php to GitHub!
+ */
+
+// ── Database Credentials (from Hostinger hPanel → Databases) ──
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'u123456789_chefjon');       // Your Hostinger DB name
+define('DB_USER', 'u123456789_chefjon');       // Your Hostinger DB user
+define('DB_PASS', 'YourSecurePasswordHere');   // Your Hostinger DB password
+
+// ── Site URL (your live domain, no trailing slash) ──
+define('SITE_URL', 'https://chefjonchung.com');
+
+// ── Site Name ──
+define('SITE_NAME', 'Chef Jon Chung');
+
+// ── Disable error display in production ──
+ini_set('display_errors', 0);
+error_reporting(0);

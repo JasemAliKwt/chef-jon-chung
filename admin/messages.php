@@ -112,8 +112,8 @@ include __DIR__ . '/../includes/admin-header.php';
             <?= nl2br(h($viewMessage['message'])) ?>
         </div>
         <div class="message-reply">
-            <a href="mailto:<?= h($viewMessage['sender_email']) ?>?subject=Re: Message from <?= h(SITE_NAME) ?>"
-               class="btn btn-primary">Reply via Email</a>
+            <a href="https://mail.google.com/mail/?view=cm&to=<?= urlencode($viewMessage['sender_email']) ?>&su=<?= urlencode('Re: Message from ' . SITE_NAME) ?>"
+               class="btn btn-primary" target="_blank" rel="noopener">Reply via Gmail</a>
         </div>
     </div>
 

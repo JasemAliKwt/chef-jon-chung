@@ -1,19 +1,66 @@
-# ── Security ───────────────────────────────
-# Block access to sensitive files
+# ============================================
+# Chef Jon Chung — Apache Configuration
+# ============================================
+
+# ── Security Headers ───────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── Block Sensitive Files ──────────────────
 <FilesMatch "\.(sql|md|gitignore)$">
     Require all denied
 </FilesMatch>
 
-# Block access to includes directory
+# Block config.local.php
+<Files "config.local.php">
+    Require all denied
+</Files>
+
+# ── Rewrite Rules ──────────────────────────
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # Block direct access to includes/
     RewriteRule ^includes/ - [F,L]
+
+    # Force HTTPS (uncomment after SSL is set up on Hostinger)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Clean URLs — recipe pages
+    RewriteRule ^recipe/([a-zA-Z0-9-]+)/?$ recipe.php?slug=$1 [L,QSA]
+
+    # Clean URLs — blog posts
+    RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
+
+    # Clean URLs — category filter
+    RewriteRule ^category/([a-zA-Z0-9-]+)/?$ recipes.php?category=$1 [L,QSA]
+
+    # Clean URLs — static pages
+    RewriteRule ^recipes/?$ recipes.php [L,QSA]
+    RewriteRule ^blog/?$ blog.php [L,QSA]
+    RewriteRule ^about/?$ about.php [L,QSA]
+    RewriteRule ^contact/?$ contact.php [L,QSA]
+
+    # Custom 404
+    ErrorDocument 404 /404.php
 </IfModule>
 
-# ── Clean URLs (Phase 4) ──────────────────
-# Uncomment these when ready for clean URLs:
-# RewriteEngine On
-# RewriteBase /
-# RewriteRule ^recipe/([a-z0-9-]+)/?$ recipe.php?slug=$1 [L,QSA]
-# RewriteRule ^blog/([a-z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
-# RewriteRule ^category/([a-z0-9-]+)/?$ recipes.php?category=$1 [L,QSA]
+# ── Caching ────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# ── Compression ────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript
+</IfModule>
