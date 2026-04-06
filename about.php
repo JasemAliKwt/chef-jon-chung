@@ -25,6 +25,8 @@ function aboutToHtml(string $text): string {
 }
 
 require_once __DIR__ . '/includes/header.php';
+
+trackPageView('about');
 ?>
 
 <section class="page-hero page-hero-sm">

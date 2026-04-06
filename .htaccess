@@ -2,6 +2,11 @@
 # Chef Jon Chung — Apache Configuration
 # ============================================
 
+# ── PHP Upload Settings ────────────────────
+php_value upload_max_filesize 20M
+php_value post_max_size 50M
+php_value max_file_uploads 20
+
 # ── Security Headers ───────────────────────
 <IfModule mod_headers.c>
     Header always set X-Frame-Options "SAMEORIGIN"

@@ -29,7 +29,10 @@ $thumb = $recipe['thumbnail_url'] ?: youTubeThumbnail($recipe['youtube_url']);
             <?php if ($recipe['cook_time_minutes']): ?>
                 <span class="recipe-meta-item">⏱ <?= $recipe['cook_time_minutes'] ?> min</span>
             <?php endif; ?>
-            <span class="recipe-meta-item">📊 <?= h($recipe['difficulty']) ?></span>
+            <span class="recipe-meta-item"><?= h($recipe['difficulty']) ?></span>
+            <?php if (!empty($recipe['spice_level']) && $recipe['spice_level'] !== 'None'): ?>
+                <span class="recipe-meta-item"><?= spiceLevelIcon($recipe['spice_level']) ?></span>
+            <?php endif; ?>
         </div>
     </div>
 </article>

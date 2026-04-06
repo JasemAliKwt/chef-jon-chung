@@ -38,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 require_once __DIR__ . '/includes/header.php';
+
+trackPageView('contact');
 ?>
 
 <section class="page-hero page-hero-sm">

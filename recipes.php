@@ -62,6 +62,8 @@ $categories = dbFetchAll(
 );
 
 require_once __DIR__ . '/includes/header.php';
+
+trackPageView('recipes');
 ?>
 
 <section class="page-hero page-hero-sm">

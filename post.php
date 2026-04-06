@@ -42,6 +42,8 @@ function textToHtml(string $text): string {
     return $html;
 }
 
+trackPageView('blog', $post['id']);
+
 require_once __DIR__ . '/includes/header.php';
 ?>
 

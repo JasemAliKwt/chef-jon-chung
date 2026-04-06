@@ -37,6 +37,18 @@
             </div>
         </div>
 
+        <!-- Newsletter Signup -->
+        <div class="footer-newsletter">
+            <h4>Stay Updated</h4>
+            <p>Get notified when new recipes are posted.</p>
+            <form class="newsletter-form" method="POST" action="<?= SITE_URL ?>/subscribe.php">
+                <?= csrfField() ?>
+                <input type="text" name="name" placeholder="Your name" class="newsletter-input" required>
+                <input type="email" name="email" placeholder="Your email" class="newsletter-input" required>
+                <button type="submit" class="btn btn-primary newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+
         <div class="footer-bottom">
             <p><?= h(getSetting('footer_text', '© ' . date('Y') . ' ' . $siteName)) ?></p>
         </div>

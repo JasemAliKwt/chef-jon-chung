@@ -289,3 +289,83 @@ function categoryUrl(string $slug): string {
 function pageUrl(string $page): string {
     return SITE_URL . '/' . $page;
 }
+
+// ── Analytics Tracking ────────────────────
+
+function trackPageView(string $pageType, ?int $pageId = null): void {
+    try {
+        dbInsert(
+            "INSERT INTO page_views (page_type, page_id, visitor_ip, user_agent) VALUES (?, ?, ?, ?)",
+            [$pageType, $pageId, $_SERVER['REMOTE_ADDR'] ?? '', mb_strimwidth($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 500)]
+        );
+    } catch (Exception $e) {
+        // Silently fail — don't break the page for analytics
+    }
+}
+
+// ── Recipe Ratings ────────────────────────
+
+function getRecipeRating(int $recipeId): array {
+    $row = dbFetchOne(
+        "SELECT COUNT(*) as count, COALESCE(AVG(rating), 0) as average FROM recipe_ratings WHERE recipe_id = ?",
+        [$recipeId]
+    );
+    return [
+        'count'   => (int) $row['count'],
+        'average' => round((float) $row['average'], 1),
+    ];
+}
+
+function hasVisitorRated(int $recipeId): bool {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    return dbCount(
+        "SELECT COUNT(*) FROM recipe_ratings WHERE recipe_id = ? AND visitor_ip = ?",
+        [$recipeId, $ip]
+    ) > 0;
+}
+
+// ── Allergen Helpers ──────────────────────
+
+function getAllergenOptions(): array {
+    return [
+        'gluten'    => 'Gluten',
+        'dairy'     => 'Dairy',
+        'eggs'      => 'Eggs',
+        'soy'       => 'Soy',
+        'shellfish' => 'Shellfish',
+        'fish'      => 'Fish',
+        'peanuts'   => 'Peanuts',
+        'tree_nuts' => 'Tree Nuts',
+        'sesame'    => 'Sesame',
+    ];
+}
+
+function getDietaryOptions(): array {
+    return [
+        'vegan'       => 'Vegan',
+        'vegetarian'  => 'Vegetarian',
+        'gluten_free' => 'Gluten-Free',
+        'dairy_free'  => 'Dairy-Free',
+        'keto'        => 'Keto',
+        'halal'       => 'Halal',
+    ];
+}
+
+function formatAllergens(?string $allergensJson): array {
+    if (empty($allergensJson)) return [];
+    $allergens = json_decode($allergensJson, true);
+    return is_array($allergens) ? $allergens : [];
+}
+
+// ── Spice Level Helper ────────────────────
+
+function spiceLevelIcon(string $level): string {
+    $icons = [
+        'None'      => '',
+        'Mild'      => '🌶️',
+        'Medium'    => '🌶️🌶️',
+        'Hot'       => '🌶️🌶️🌶️',
+        'Extra Hot' => '🌶️🌶️🌶️🌶️',
+    ];
+    return $icons[$level] ?? '';
+}

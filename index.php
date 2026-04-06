@@ -6,6 +6,8 @@ $pageTitle = 'Home';
 
 require_once __DIR__ . '/includes/header.php';
 
+trackPageView('home');
+
 // Featured recipe
 $featured = dbFetchOne(
     "SELECT r.*, c.name as category_name

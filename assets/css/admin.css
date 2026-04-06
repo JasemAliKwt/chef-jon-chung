@@ -310,12 +310,27 @@ a:hover { color: var(--primary-light); }
     padding: 20px;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
 }
 
-.stat-card:first-child { border-left: 3px solid var(--primary); }
-.stat-card:nth-child(2) { border-left: 3px solid var(--admin-blue); }
-.stat-card:nth-child(3) { border-left: 3px solid var(--accent-gold); }
-.stat-card:nth-child(4) { border-left: 3px solid var(--accent-green); }
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+.stat-card:first-child::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+.stat-card:nth-child(2)::before { background: linear-gradient(90deg, var(--admin-blue), #6BA3C7); }
+.stat-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent-gold), #E8C88A); }
+.stat-card:nth-child(4)::before { background: linear-gradient(90deg, var(--accent-green), #6B8F62); }
 
 .stat-icon { font-size: 24px; margin-bottom: 8px; }
 .stat-info { display: flex; align-items: baseline; gap: 8px; }
@@ -848,4 +863,192 @@ a.panel-item-title:hover { color: var(--primary); }
         flex: 1;
         text-align: center;
     }
+}
+
+/* ── Gallery Grid (Admin) ──────────────────── */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.gallery-item {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-delete-form {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+.gallery-delete-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(192, 57, 43, 0.9);
+    color: white;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition);
+}
+.gallery-delete-btn:hover { background: #C0392B; }
+
+/* ── Allergen Grid (Admin) ─────────────────── */
+.allergen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 4px;
+}
+
+/* ── Analytics Cards ───────────────────────── */
+.stats-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 28px;
+}
+
+.stat-card-compact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+}
+.stat-card-compact::before {
+    background: linear-gradient(90deg, var(--accent-gold), #E8C88A) !important;
+}
+
+.stat-number-sm {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ── Ranking in panels ─────────────────────── */
+.panel-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.panel-item-stat {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-weight: 600;
+    background: var(--bg);
+    padding: 2px 10px;
+    border-radius: 12px;
+}
+
+/* ── Dashboard Panel Hover ─────────────────── */
+.dashboard-panel {
+    transition: box-shadow var(--transition);
+}
+.dashboard-panel:hover {
+    box-shadow: var(--shadow);
+}
+
+.panel-list-item:hover {
+    background: var(--bg);
+}
+
+/* ── Sortable Column Headers ───────────────── */
+.sort-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.sort-link:hover { color: var(--primary); }
+
+@media (max-width: 768px) {
+    .stats-grid-3 { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .allergen-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Dashboard Chart ───────────────────────── */
+.chart-panel {
+    margin-bottom: 28px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+}
+
+.chart-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 200px;
+    padding: 24px 24px 0;
+    gap: 12px;
+}
+
+.chart-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.chart-bar-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.chart-bar {
+    width: 100%;
+    max-width: 52px;
+    min-height: 4px;
+    background: linear-gradient(180deg, var(--primary) 0%, rgba(139,37,0,0.5) 100%);
+    border-radius: 6px 6px 0 0;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+.chart-bar:hover {
+    background: linear-gradient(180deg, var(--accent-gold) 0%, rgba(212,162,83,0.6) 100%);
+    transform: scaleX(1.08);
+}
+
+.chart-bar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    padding: 10px 0 14px;
+    border-top: 1px solid var(--border-light);
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.3px;
 }

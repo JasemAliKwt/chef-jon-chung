@@ -1,4 +1,4 @@
-# Chef Jon Chung
+# 🍳 Chef Jon Chung
 
 A dynamic, PHP-powered cooking recipe website with a full-featured admin panel. Built for a Korean cooking enthusiast to independently manage recipes, blog posts, and site content — no code required.
 

@@ -59,6 +59,9 @@ $unreadCount = dbCount("SELECT COUNT(*) FROM contact_messages WHERE is_read = 0"
                     <span class="nav-badge"><?= $unreadCount ?></span>
                 <?php endif; ?>
             </a>
+            <a href="<?= SITE_URL ?>/admin/subscribers.php" class="nav-item <?= basename($_SERVER['SCRIPT_NAME']) === 'subscribers.php' ? 'active' : '' ?>">
+                <span class="nav-icon">📧</span> Subscribers
+            </a>
         </div>
         <div class="nav-section">
             <span class="nav-label">⚙️ Settings</span>

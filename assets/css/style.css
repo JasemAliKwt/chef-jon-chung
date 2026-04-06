@@ -78,7 +78,7 @@ img { max-width: 100%; height: auto; display: block; }
     background: var(--red-light);
     color: var(--white);
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
+    box-shadow: 0 6px 20px rgba(139, 37, 0, 0.3);
 }
 
 .btn-outline {
@@ -89,6 +89,8 @@ img { max-width: 100%; height: auto; display: block; }
 .btn-outline:hover {
     background: var(--red);
     color: var(--white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 37, 0, 0.2);
 }
 
 .btn-hero {
@@ -100,8 +102,9 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .btn-hero:hover {
     color: var(--red);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    background: var(--gold-light);
 }
 
 /* ── Header ────────────────────────────────── */
@@ -284,8 +287,9 @@ img { max-width: 100%; height: auto; display: block; }
     transition: transform var(--transition), box-shadow var(--transition);
 }
 .recipe-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(139, 37, 0, 0.12);
+    border-color: rgba(212, 162, 83, 0.4);
 }
 
 .card-image-link {
@@ -380,6 +384,8 @@ img { max-width: 100%; height: auto; display: block; }
     background: var(--red-bg);
     border-color: var(--red);
     color: var(--red);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(139, 37, 0, 0.1);
 }
 .category-pill.active {
     background: var(--red);
@@ -664,8 +670,9 @@ img { max-width: 100%; height: auto; display: block; }
     transition: transform var(--transition), box-shadow var(--transition);
 }
 .blog-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(139, 37, 0, 0.12);
+    border-color: rgba(212, 162, 83, 0.4);
 }
 
 .blog-card-image { aspect-ratio: 16 / 9; }
@@ -970,4 +977,431 @@ img { max-width: 100%; height: auto; display: block; }
 @media (max-width: 480px) {
     .recipe-meta-bar { gap: 20px; }
     .footer-links { flex-direction: column; gap: 24px; }
+}
+
+/* ── Nav Search ────────────────────────────── */
+.nav-search {
+    display: flex;
+    margin-left: 8px;
+}
+.nav-search-input {
+    padding: 6px 12px;
+    font-family: var(--font);
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--text);
+    width: 160px;
+    transition: all var(--transition);
+}
+.nav-search-input:focus {
+    outline: none;
+    border-color: var(--red);
+    width: 220px;
+    box-shadow: 0 0 0 3px rgba(139,37,0,0.08);
+}
+
+/* ── Allergen Warning ──────────────────────── */
+.allergen-warning {
+    margin-top: 20px;
+    padding: 12px 16px;
+    background: #FFF3CD;
+    border: 1px solid #FFECB5;
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: #664D03;
+    line-height: 1.5;
+}
+
+/* ── Recipe Actions ────────────────────────── */
+.recipe-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+/* ── Photo Gallery ─────────────────────────── */
+.recipe-gallery-section { padding: 32px 0 0; }
+.section-title-sm {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.recipe-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.gallery-photo {
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    transition: transform var(--transition);
+}
+.gallery-photo:hover { transform: scale(1.02); }
+.gallery-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── Rating Stars ──────────────────────────── */
+.rating-section {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.rating-section h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+.rating-prompt { color: var(--text-muted); margin-bottom: 16px; }
+.rating-thanks { color: var(--green); font-weight: 600; margin-bottom: 12px; }
+
+.stars-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 28px;
+}
+.star { color: var(--border); }
+.star-filled { color: var(--gold); }
+
+.rating-avg {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
+.rating-count { font-size: 12px; color: var(--text-light); }
+
+/* Star input (interactive) */
+.rating-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.stars-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 4px;
+}
+.stars-input input { display: none; }
+.star-label {
+    font-size: 36px;
+    color: var(--border);
+    cursor: pointer;
+    transition: color 0.15s;
+}
+.stars-input input:checked ~ .star-label,
+.stars-input .star-label:hover,
+.stars-input .star-label:hover ~ .star-label {
+    color: var(--gold);
+}
+
+/* ── Newsletter (Footer) ──────────────────── */
+.footer-newsletter {
+    padding: 28px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin: 8px 0;
+}
+.footer-newsletter h4 {
+    color: var(--white);
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+.footer-newsletter p {
+    font-size: 14px;
+    opacity: 0.6;
+    margin-bottom: 14px;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    max-width: 520px;
+}
+.newsletter-input {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 14px;
+    font-family: var(--font);
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.08);
+    color: var(--white);
+}
+.newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+.newsletter-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(255,255,255,0.12);
+}
+.newsletter-btn {
+    padding: 10px 24px;
+    white-space: nowrap;
+}
+
+/* ── Print Styles ──────────────────────────── */
+@media print {
+    .site-header, .site-footer, .recipe-actions,
+    .rating-section, .recipe-gallery-section,
+    .recipe-video-section, .section-alt,
+    .nav-search, .recipe-breadcrumb,
+    .btn, .mobile-menu-btn { display: none !important; }
+
+    .site-main { margin: 0; padding: 0; }
+
+    .recipe-header {
+        background: none !important;
+        padding: 0 !important;
+    }
+
+    .recipe-page-title { font-size: 24px; }
+
+    .recipe-content-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .recipe-ingredients {
+        position: static !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+    }
+
+    .steps-list li { page-break-inside: avoid; }
+    .step-number {
+        background: #333 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .allergen-warning {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body { font-size: 12pt; }
+}
+
+/* ── Responsive additions ──────────────────── */
+@media (max-width: 768px) {
+    .nav-search { margin-left: 0; margin-top: 8px; width: 100%; }
+    .nav-search-input { width: 100%; }
+    .nav-search-input:focus { width: 100%; }
+    .recipe-gallery { grid-template-columns: repeat(2, 1fr); }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-input { min-width: 100%; }
+}
+
+/* ── Lightbox ──────────────────────────────── */
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.92);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+.lightbox-overlay.active { display: flex; }
+
+.lightbox-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: var(--radius);
+    cursor: default;
+    animation: lightboxFadeIn 0.2s ease;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--transition);
+    line-height: 1;
+}
+.lightbox-close:hover { opacity: 1; }
+
+@keyframes lightboxFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Dietary Tags ──────────────────────────── */
+.dietary-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.dietary-tag {
+    display: inline-block;
+    padding: 4px 14px;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid #C8DCC4;
+}
+
+/* ── Ingredient Hover Effect ───────────────── */
+.ingredients-list li {
+    transition: all var(--transition);
+    border-radius: 6px;
+    margin: 0 -8px;
+    padding: 6px 8px !important;
+    border-left: 3px solid transparent;
+}
+.ingredients-list li:hover {
+    background: linear-gradient(90deg, rgba(212, 162, 83, 0.12) 0%, rgba(212, 162, 83, 0.04) 100%);
+    border-left-color: var(--gold);
+}
+
+/* ── Recipe Card Hover Enhancement ─────────── */
+.recipe-card {
+    position: relative;
+    border-bottom: 3px solid transparent;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.recipe-card:hover {
+    border-bottom-color: var(--gold);
+}
+
+.blog-card {
+    position: relative;
+    border-bottom: 3px solid transparent;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.blog-card:hover {
+    border-bottom-color: var(--gold);
+}
+
+/* ── Steps Hover ───────────────────────────── */
+.steps-list li {
+    transition: all var(--transition);
+    border-radius: var(--radius);
+    margin: 0 -12px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    border-left: 3px solid transparent;
+}
+.steps-list li:hover {
+    background: linear-gradient(90deg, rgba(139, 37, 0, 0.05) 0%, transparent 100%);
+    border-left-color: var(--red);
+}
+.steps-list li:hover .step-number {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(139, 37, 0, 0.3);
+}
+.step-number {
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+/* ── Featured Card Hover ───────────────────── */
+.featured-card {
+    transition: box-shadow 0.3s ease;
+}
+.featured-card:hover {
+    box-shadow: 0 8px 32px rgba(139, 37, 0, 0.12);
+}
+
+/* ── Nav Link Hover ────────────────────────── */
+.nav-link {
+    position: relative;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    height: 2px;
+    background: var(--gold);
+    transition: all 0.25s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+    left: 8px;
+    right: 8px;
+}
+
+/* ── Card Title Hover ──────────────────────── */
+.card-title a {
+    transition: color var(--transition);
+    background-image: linear-gradient(var(--gold-light), var(--gold-light));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease, color var(--transition);
+}
+.card-title a:hover {
+    color: var(--red);
+    background-size: 100% 2px;
+}
+
+/* ── Social Link Hover ─────────────────────── */
+.social-link:hover {
+    background: var(--red);
+    color: var(--white);
+    border-color: var(--red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 37, 0, 0.2);
+}
+
+/* ── Footer Link Hover ─────────────────────── */
+.footer-col a:hover {
+    color: var(--gold);
+    padding-left: 4px;
+}
+.footer-col a {
+    transition: color var(--transition), padding-left var(--transition);
+}
+
+/* ── Read More Link ────────────────────────── */
+.read-more {
+    position: relative;
+    padding-bottom: 2px;
+}
+.read-more::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+}
+.read-more:hover::after {
+    width: 100%;
+}
+
+/* ── Search Button Hover ───────────────────── */
+.search-btn:hover {
+    background: var(--red-light);
+    box-shadow: 0 2px 8px rgba(139, 37, 0, 0.2);
 }

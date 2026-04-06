@@ -40,11 +40,17 @@ $perPage = 15;
 $total = dbCount("SELECT COUNT(*) FROM recipes");
 $pagination = paginate($total, $perPage, $page);
 
+// Sorting
+$sortCol = $_GET['sort'] ?? 'created_at';
+$sortDir = ($_GET['dir'] ?? 'desc') === 'asc' ? 'ASC' : 'DESC';
+$allowedSorts = ['title' => 'r.title', 'category' => 'c.name', 'difficulty' => 'r.difficulty', 'created_at' => 'r.created_at'];
+$orderBy = $allowedSorts[$sortCol] ?? 'r.created_at';
+
 $recipes = dbFetchAll(
     "SELECT r.*, c.name as category_name 
      FROM recipes r 
      LEFT JOIN categories c ON r.category_id = c.id 
-     ORDER BY r.created_at DESC 
+     ORDER BY {$orderBy} {$sortDir}
      LIMIT ? OFFSET ?",
     [$perPage, $pagination['offset']]
 );
@@ -69,11 +75,23 @@ include __DIR__ . '/../includes/admin-header.php';
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Difficulty</th>
+                    <?php
+                        $flipDir = $sortDir === 'ASC' ? 'desc' : 'asc';
+                        function sortLink($col, $label, $currentSort, $currentDir) {
+                            $arrow = '';
+                            $dir = 'asc';
+                            if ($currentSort === $col) {
+                                $arrow = $currentDir === 'ASC' ? ' ↑' : ' ↓';
+                                $dir = $currentDir === 'ASC' ? 'desc' : 'asc';
+                            }
+                            return '<a href="?sort=' . $col . '&dir=' . $dir . '" class="sort-link">' . $label . $arrow . '</a>';
+                        }
+                    ?>
+                    <th><?= sortLink('title', 'Title', $sortCol, $sortDir) ?></th>
+                    <th><?= sortLink('category', 'Category', $sortCol, $sortDir) ?></th>
+                    <th><?= sortLink('difficulty', 'Difficulty', $sortCol, $sortDir) ?></th>
                     <th>Status</th>
-                    <th>Date</th>
+                    <th><?= sortLink('created_at', 'Date', $sortCol, $sortDir) ?></th>
                     <th class="th-actions">Actions</th>
                 </tr>
             </thead>
@@ -113,6 +131,7 @@ include __DIR__ . '/../includes/admin-header.php';
                         <td><?= date('M j, Y', strtotime($recipe['created_at'])) ?></td>
                         <td class="td-actions">
                             <a href="<?= SITE_URL ?>/admin/recipe-edit.php?id=<?= $recipe['id'] ?>" class="btn btn-sm btn-outline">Edit</a>
+                            <a href="<?= SITE_URL ?>/admin/recipe-edit.php?duplicate=<?= $recipe['id'] ?>" class="btn btn-sm btn-outline" title="Duplicate">Dupe</a>
                             <form method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to delete this recipe?')">
                                 <?= csrfField() ?>
                                 <input type="hidden" name="action" value="delete">

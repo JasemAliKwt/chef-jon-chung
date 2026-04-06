@@ -61,6 +61,9 @@ $socialTT    = getSetting('social_tiktok');
             <a href="<?= pageUrl('blog') ?>" class="nav-link <?= basename($_SERVER['SCRIPT_NAME']) === 'blog.php' || basename($_SERVER['SCRIPT_NAME']) === 'post.php' ? 'active' : '' ?>">Blog</a>
             <a href="<?= pageUrl('about') ?>" class="nav-link <?= basename($_SERVER['SCRIPT_NAME']) === 'about.php' ? 'active' : '' ?>">About</a>
             <a href="<?= pageUrl('contact') ?>" class="nav-link <?= basename($_SERVER['SCRIPT_NAME']) === 'contact.php' ? 'active' : '' ?>">Contact</a>
+            <form class="nav-search" action="<?= pageUrl('recipes') ?>" method="GET">
+                <input type="text" name="q" placeholder="Search..." value="<?= h($_GET['q'] ?? '') ?>" class="nav-search-input">
+            </form>
         </nav>
     </div>
 </header>
