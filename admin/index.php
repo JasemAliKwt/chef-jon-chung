@@ -21,7 +21,7 @@ $viewsToday   = dbCount("SELECT COUNT(*) FROM page_views WHERE DATE(viewed_at) =
 $viewsWeek    = dbCount("SELECT COUNT(*) FROM page_views WHERE viewed_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
 $viewsMonth   = dbCount("SELECT COUNT(*) FROM page_views WHERE viewed_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)");
 
-// 7-day chart data
+// 7-day chart data — let MySQL handle dates to avoid timezone mismatch
 $chartData = dbFetchAll(
     "SELECT DATE(viewed_at) as day, COUNT(*) as views
      FROM page_views
@@ -30,18 +30,40 @@ $chartData = dbFetchAll(
      ORDER BY day ASC"
 );
 
-// Fill in missing days with 0
+// Build chart keyed by MySQL's dates
 $chart = [];
-for ($i = 6; $i >= 0; $i--) {
-    $date = date('Y-m-d', strtotime("-{$i} days"));
-    $chart[$date] = 0;
+$mysqlDays = dbFetchAll(
+    "SELECT DATE(DATE_SUB(NOW(), INTERVAL n DAY)) as day,
+            DAYNAME(DATE_SUB(NOW(), INTERVAL n DAY)) as dayname
+     FROM (SELECT 6 as n UNION SELECT 5 UNION SELECT 4 UNION SELECT 3 UNION SELECT 2 UNION SELECT 1 UNION SELECT 0) days
+     ORDER BY n DESC"
+);
+foreach ($mysqlDays as $d) {
+    $chart[$d['day']] = ['views' => 0, 'label' => substr($d['dayname'], 0, 3)];
 }
 foreach ($chartData as $row) {
     if (isset($chart[$row['day']])) {
-        $chart[$row['day']] = (int) $row['views'];
+        $chart[$row['day']]['views'] = (int) $row['views'];
     }
 }
-$chartMax = max(1, max($chart));
+$chartMax = max(1, max(array_column($chart, 'views')));
+
+// Traffic by section (last 30 days)
+$sectionData = dbFetchAll(
+    "SELECT page_type, COUNT(*) as views
+     FROM page_views
+     WHERE viewed_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+     GROUP BY page_type
+     ORDER BY views DESC"
+);
+$sectionMax = 1;
+if (!empty($sectionData)) {
+    $sectionMax = max(1, (int) $sectionData[0]['views']);
+}
+$sectionLabels = [
+    'home' => 'Home', 'recipe' => 'Recipes', 'recipes' => 'Browse',
+    'blog' => 'Blog', 'about' => 'About', 'contact' => 'Contact',
+];
 
 // Popular recipes (by views, last 30 days)
 $popularRecipes = dbFetchAll(
@@ -134,21 +156,46 @@ include __DIR__ . '/../includes/admin-header.php';
     </div>
 </div>
 
-<!-- Views Chart (7 Days) -->
-<div class="dashboard-panel chart-panel">
-    <div class="panel-header">
-        <h2>Page Views — Last 7 Days</h2>
-        <span class="panel-link"><?= $viewsWeek ?> total</span>
-    </div>
-    <div class="chart-container">
-        <?php foreach ($chart as $date => $views): ?>
-            <div class="chart-bar-wrapper">
-                <span class="chart-bar-value"><?= $views ?></span>
-                <div class="chart-bar" style="height: <?= round(($views / $chartMax) * 100) ?>%;">
+<!-- Charts Row -->
+<div class="dashboard-grid">
+    <!-- 7-Day Views -->
+    <div class="dashboard-panel">
+        <div class="panel-header">
+            <h2>Daily Views</h2>
+            <span class="panel-link"><?= $viewsWeek ?> this week</span>
+        </div>
+        <div class="chart-container">
+            <?php foreach ($chart as $date => $data): ?>
+                <div class="chart-bar-wrapper">
+                    <span class="chart-bar-value"><?= $data['views'] ?></span>
+                    <div class="chart-bar" style="height: <?= round(($data['views'] / $chartMax) * 100) ?>%;"></div>
+                    <span class="chart-bar-label"><?= $data['label'] ?></span>
                 </div>
-                <span class="chart-bar-label"><?= date('D', strtotime($date)) ?></span>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- Traffic by Section -->
+    <div class="dashboard-panel">
+        <div class="panel-header">
+            <h2>Traffic by Section</h2>
+            <span class="panel-link">Last 30 days</span>
+        </div>
+        <div class="hbar-container">
+            <?php if (empty($sectionData)): ?>
+                <div class="empty-state"><p>No traffic data yet.</p></div>
+            <?php else: ?>
+                <?php foreach ($sectionData as $section): ?>
+                    <div class="hbar-row">
+                        <span class="hbar-label"><?= h($sectionLabels[$section['page_type']] ?? ucfirst($section['page_type'])) ?></span>
+                        <div class="hbar-track">
+                            <div class="hbar-fill" style="width: <?= round(($section['views'] / $sectionMax) * 100) ?>%;"></div>
+                        </div>
+                        <span class="hbar-value"><?= $section['views'] ?></span>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 
@@ -215,7 +262,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <!-- Popular & Top Rated -->
 <?php if (!empty($popularRecipes) || !empty($topRated)): ?>
-<div class="dashboard-grid" style="margin-top: 20px;">
+<div class="dashboard-grid">
     <?php if (!empty($popularRecipes)): ?>
     <div class="dashboard-panel">
         <div class="panel-header">
