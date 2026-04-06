@@ -280,6 +280,15 @@ include __DIR__ . '/../includes/admin-header.php';
     </div>
 <?php endif; ?>
 
+<!-- Hidden form for gallery image deletion (outside main form to avoid nesting) -->
+<?php if ($isEdit): ?>
+<form method="POST" id="deleteImageForm" style="display:none;">
+    <input type="hidden" name="<?= CSRF_TOKEN_NAME ?>" value="<?= csrfToken() ?>">
+    <input type="hidden" name="action" value="delete_image">
+    <input type="hidden" name="image_id" value="" id="deleteImageId">
+</form>
+<?php endif; ?>
+
 <form method="POST" enctype="multipart/form-data" class="recipe-form">
     <?= csrfField() ?>
 
@@ -337,15 +346,10 @@ include __DIR__ . '/../includes/admin-header.php';
                 <?php if (!empty($galleryImages)): ?>
                     <div class="gallery-grid">
                         <?php foreach ($galleryImages as $img): ?>
-                            <div class="gallery-item">
+                            <div class="gallery-item" id="gallery-item-<?= $img['id'] ?>">
                                 <img src="<?= h($img['image_url']) ?>" alt="">
-                                <form method="POST" class="gallery-delete-form">
-                                    <?= csrfField() ?>
-                                    <input type="hidden" name="action" value="delete_image">
-                                    <input type="hidden" name="image_id" value="<?= $img['id'] ?>">
-                                    <button type="submit" class="gallery-delete-btn" title="Remove image"
-                                            onclick="return confirm('Remove this image?')">×</button>
-                                </form>
+                                <button type="button" class="gallery-delete-btn" title="Remove image"
+                                        onclick="deleteGalleryImage(<?= $img['id'] ?>)">×</button>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -484,5 +488,14 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
     </div>
 </form>
+
+<script>
+function deleteGalleryImage(imageId) {
+    if (confirm('Remove this image?')) {
+        document.getElementById('deleteImageId').value = imageId;
+        document.getElementById('deleteImageForm').submit();
+    }
+}
+</script>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

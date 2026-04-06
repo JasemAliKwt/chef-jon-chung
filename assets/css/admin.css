@@ -887,12 +887,10 @@ a.panel-item-title:hover { color: var(--primary); }
     object-fit: cover;
 }
 
-.gallery-delete-form {
+.gallery-delete-btn {
     position: absolute;
     top: 4px;
     right: 4px;
-}
-.gallery-delete-btn {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -906,6 +904,7 @@ a.panel-item-title:hover { color: var(--primary); }
     align-items: center;
     justify-content: center;
     transition: background var(--transition);
+    z-index: 2;
 }
 .gallery-delete-btn:hover { background: #C0392B; }
 
