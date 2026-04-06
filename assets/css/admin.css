@@ -757,6 +757,38 @@ a.panel-item-title:hover { color: var(--primary); }
 .message-email { color: var(--text-muted); font-size: 13px; }
 .message-date { color: var(--text-light); font-size: 13px; white-space: nowrap; }
 
+.message-actions-bar { display: flex; gap: 8px; }
+.page-header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn-copy-email {
+    display: inline-block;
+    padding: 2px 8px;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: all var(--transition);
+    vertical-align: middle;
+}
+.btn-copy-email:hover { background: var(--admin-blue-light); color: var(--admin-blue); border-color: var(--admin-blue); }
+
+.bulk-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--admin-blue-light);
+    border: 1px solid #C5D9E8;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+}
+.bulk-count { font-size: 13px; font-weight: 600; color: var(--admin-blue); }
+
 .message-body {
     font-size: 15px;
     line-height: 1.7;
